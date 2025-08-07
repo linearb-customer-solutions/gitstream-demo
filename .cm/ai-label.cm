@@ -1,0 +1,24 @@
+manifest:
+  version: 1.0
+
+triggers:
+  on:
+    - pr_created
+    - commit
+    - pr_ready_for_review
+
+automations:
+  tag_claude_pr:
+    if:
+      - {{ is.claude_author or is.claude_co_author }}
+    run:
+      - action: add-label@v1
+        args:
+          label: "🤖 Claude Code"
+      - action: add-label@v1
+        args:
+          label: "ai-assisted"
+
+is:
+  claude_author: {{ pr.author | lower | includes(regex=r/claude/) }}
+  claude_co_author: {{ branch.commits.messages | match(regex=r/[Cc]o-[Aa]uthored-[Bb]y:.*[Cc]laude/) | some }}
