@@ -9,7 +9,7 @@ triggers:
     - pr_ready_for_review
   include:
     branch:
-      - base-kit
+      - base-kit-spanish
 
 automations:
   linearb_ai_review:
