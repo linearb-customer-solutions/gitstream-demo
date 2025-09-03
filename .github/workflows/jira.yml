@@ -58,6 +58,7 @@ jobs:
           steps.reviews.outputs.approvals == '0' &&
           steps.create_bug.outputs.issue != ''
         run: |
+          git config --global user.email "${{ vars.PR_COMMITTER_USERNAME }}@users.noreply.github.com"
           git revert -m 1 --no-edit HEAD || git revert --no-edit HEAD
 
       - name: Create rollback PR
