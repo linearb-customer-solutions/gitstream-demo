@@ -5,8 +5,7 @@ from pydantic import BaseModel
 router = APIRouter()
 
 USER_DB = {
-    "alice": "password123",
-    "admin": "admin"
+    "alice": "password123"
 }
 
 SESSIONS = {}
