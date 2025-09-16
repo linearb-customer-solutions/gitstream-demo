@@ -71,8 +71,11 @@ public class OrderController {
             pstmt.setInt(4, request.quantity);
             pstmt.setString(5, timestamp);
             pstmt.executeUpdate();
+        } catch (java.sql.SQLException e) {
+            logger.error("Database error during order storage: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Order storage failed");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Unexpected error during order storage: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Order storage failed");
         }
 
