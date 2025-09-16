@@ -56,7 +56,8 @@ public class BillingController : ControllerBase
     private async Task QueueForBillingSystemAsync(string username, object payload)
     {
         Directory.CreateDirectory(StorageDirectory);
-        var filePath = Path.Combine(StorageDirectory, $"{username}.json");
+        var sanitizedUsername = Path.GetFileName(username);
+        var filePath = Path.Combine(StorageDirectory, $"{sanitizedUsername}.json");
         List<object> payloads = new();
 
         if (System.IO.File.Exists(filePath))
