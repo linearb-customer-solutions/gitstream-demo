@@ -65,7 +65,17 @@ public class BillingController : ControllerBase
             {
                 payloads = JsonSerializer.Deserialize<List<object>>(await System.IO.File.ReadAllTextAsync(filePath)) ?? new();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to deserialize existing billing data for user {Username}. Creating backup and starting fresh.", username);
+
+                // Create backup of corrupted file
+                var backupPath = $"{filePath}.backup.{DateTime.UtcNow:yyyyMMddHHmmss}";
+                System.IO.File.Copy(filePath, backupPath);
+
+                // Start with empty list - data loss is logged and backed up
+                payloads = new();
+            }
         }
 
         payloads.Add(payload);
