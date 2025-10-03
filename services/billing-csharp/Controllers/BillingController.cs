@@ -67,7 +67,7 @@ public class BillingController : ControllerBase
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to deserialize existing billing data for user {Username}. Creating backup and starting fresh.", username);
+                Console.WriteLine($"Failed to deserialize existing billing data for user {username}. Creating backup and starting fresh. Error: {ex.Message}");
 
                 // Create backup of corrupted file
                 var backupPath = $"{filePath}.backup.{DateTime.UtcNow:yyyyMMddHHmmss}";
