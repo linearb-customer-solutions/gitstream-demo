@@ -37,8 +37,8 @@ public class OrderController {
                     "quantity INT, " +
                     "timestamp VARCHAR(255))");
         } catch (Exception e) {
-            // Log error, but don't prevent app startup
-            e.printStackTrace();
+            // Re-throw exception to prevent app startup if database initialization fails
+            throw new RuntimeException("Failed to initialize orders table", e);
         }
     }
 
