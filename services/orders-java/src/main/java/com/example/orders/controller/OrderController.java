@@ -72,7 +72,7 @@ public class OrderController {
             pstmt.setString(5, timestamp);
             pstmt.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Database error occurred while storing order", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Order storage failed");
         }
 
