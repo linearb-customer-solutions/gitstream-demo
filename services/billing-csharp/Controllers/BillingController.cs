@@ -65,7 +65,11 @@ public class BillingController : ControllerBase
             {
                 payloads = JsonSerializer.Deserialize<List<object>>(await System.IO.File.ReadAllTextAsync(filePath)) ?? new();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Log deserialization error but continue with empty list to avoid breaking the operation
+                Console.WriteLine($"Warning: Failed to deserialize existing billing data for user {username}: {ex.Message}");
+            }
         }
 
         payloads.Add(payload);
