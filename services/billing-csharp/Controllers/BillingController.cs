@@ -53,9 +53,12 @@ public class BillingController : ControllerBase
         return Ok(JsonSerializer.Serialize(responsePayload));
     }
 
+    private static readonly ConcurrentDictionary<string, object> _userLocks = new ConcurrentDictionary<string, object>();
+
     private void QueueForBillingSystem(string username, object payload)
     {
-        lock (string.Intern(username))
+        var lockObject = _userLocks.GetOrAdd(username, _ => new object());
+        lock (lockObject)
         {
             Directory.CreateDirectory(StorageDirectory);
             var filePath = Path.Combine(StorageDirectory, $"{username}.json");
