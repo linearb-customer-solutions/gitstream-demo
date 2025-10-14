@@ -48,31 +48,37 @@ public class BillingController : ControllerBase
             date = request.Date.ToString("o") // ISO-8601 format
         };
 
-        await QueueForBillingSystemAsync(request.Username, responsePayload);
+        QueueForBillingSystem(request.Username, responsePayload);
 
         return Ok(JsonSerializer.Serialize(responsePayload));
     }
 
-    private async Task QueueForBillingSystemAsync(string username, object payload)
+    private void QueueForBillingSystem(string username, object payload)
     {
-        Directory.CreateDirectory(StorageDirectory);
-        var filePath = Path.Combine(StorageDirectory, $"{username}.json");
-        List<object> payloads = new();
-
-        if (System.IO.File.Exists(filePath))
+        lock (string.Intern(username))
         {
-            try
+            Directory.CreateDirectory(StorageDirectory);
+            var filePath = Path.Combine(StorageDirectory, $"{username}.json");
+            List<object> payloads = new();
+    
+            if (System.IO.File.Exists(filePath))
             {
-                payloads = JsonSerializer.Deserialize<List<object>>(await System.IO.File.ReadAllTextAsync(filePath)) ?? new();
+                try
+                {
+                    // Use synchronous File.ReadAllText
+                    payloads = JsonSerializer.Deserialize<List<object>>(
+                        System.IO.File.ReadAllText(filePath)) ?? new();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Warning: Failed to deserialize existing billing data for user {username}: {ex.Message}");
+                }
             }
-            catch (Exception ex)
-            {
-                // Log deserialization error but continue with empty list to avoid breaking the operation
-                Console.WriteLine($"Warning: Failed to deserialize existing billing data for user {username}: {ex.Message}");
-            }
+    
+            payloads.Add(payload);
+            // Use synchronous File.WriteAllText
+            System.IO.File.WriteAllText(filePath, 
+                JsonSerializer.Serialize(payloads, new JsonSerializerOptions { WriteIndented = true }));
         }
-
-        payloads.Add(payload);
-        await System.IO.File.WriteAllTextAsync(filePath, JsonSerializer.Serialize(payloads, new JsonSerializerOptions { WriteIndented = true }));
     }
 }
