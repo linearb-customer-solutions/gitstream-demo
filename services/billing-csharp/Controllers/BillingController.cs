@@ -63,7 +63,7 @@ public class BillingController : ControllerBase
         {
             try
             {
-                payloads = JsonSerializer.Deserialize<List<object>>(await System.IO.File.ReadAllTextAsync(filePath)) ?? new();
+                payloads = JsonSerializer.Deserialize<List<JsonElement>>(await System.IO.File.ReadAllTextAsync(filePath)) ?? new();
             }
             catch { }
         }
