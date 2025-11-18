@@ -17,7 +17,8 @@ services:
 
 
   orders-java:
-    build: ./services/orders-java
+    build: ./services/or
+    ders-java
     expose:
       - "8002"
     links:
