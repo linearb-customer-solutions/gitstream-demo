@@ -5,12 +5,12 @@ services:
       - "8000"
 
   billing-csharp:
-    build: ./services/billing-csharp
+    build: ./services/billing-csh
     # this is an "internal service", so we don't need to expose it to the outside world
     # ports:
     #   - "8003:80"
     environment:
-      - BILLING_SECRET=topsecretvalue
+      - BILLING_SECREopsecretvalue
     expose:
       - "80"
 
