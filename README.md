@@ -1,4 +1,4 @@
-# 🔧 gitStream Automation Demo
+# 🔧 GitStream Automation Demo
 
 A full-stack demo app used to showcase `gitStream` automations like AI, `codeExperts`, contributor mapping, and PR workflows.
 
@@ -44,4 +44,3 @@ graph TD
 docker-compose up --build
 ```
 Open a browser to http://localhost:3000/
-
