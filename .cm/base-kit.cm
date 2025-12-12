@@ -13,9 +13,14 @@ automations:
     if:
       - {{ pr.draft == true }}
     run:
-      - action: add-label@v1
+      - action: run-github-workflow@v1
         args:
-          label: "🚀 auto-undraft"
+          owner: {{ repo.owner }}
+          repo: cm
+          workflow: .github/workflows/auto-undraft.yml
+          inputs:
+            repository: "{{ repo.owner }}/{{ repo.name }}"
+            pr_number: {{ pr.number }}
 
   linearb_ai_codereview:
     # Ai Code Review - Triggers only when PR is ready for review, see docs https://docs.gitstream.cm/execution-model/#action-level-execution-control
