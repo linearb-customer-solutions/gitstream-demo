@@ -10,6 +10,7 @@ services:
     # ports:
     #   - "8003:80"
     environment:
+    asdsadsad
       - BILLING_SECRET=topsecretvalue
     expose:
       - "80"
