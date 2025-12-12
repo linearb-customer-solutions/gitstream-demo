@@ -1,23 +1,23 @@
 name: Auto Undraft PR
 
 on:
-  pull_request:
-    types: [labeled]
+  workflow_call:
+    inputs:
+      repository:
+        required: true
+        type: string
+        description: "The repository where the PR lives (owner/repo)"
+      pr_number:
+        required: true
+        type: string
 
 jobs:
   mark-ready:
-    if: |
-      github.event.pull_request.draft == true &&
-      contains(github.event.pull_request.labels.*.name, '🚀 auto-undraft')
     runs-on: ubuntu-latest
     steps:
       - name: Mark PR as ready for review
-        run: gh pr ready ${{ github.event.pull_request.number }}
+        run: gh pr ready ${{ inputs.pr_number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ inputs.repository }}
       
-      - name: Clean up trigger label
-        if: always()
-        run: gh pr edit ${{ github.event.pull_request.number }} --remove-label "🚀 auto-undraft"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
