@@ -9,8 +9,9 @@ triggers:
 
 automations:
   auto_undraft:
+    on: [pr_created]
     if:
-      - {{ pr.draft == true }}
+      - {{ pr.draft }}
     run:
       - action: run-github-workflow@v1
         args:
@@ -20,7 +21,7 @@ automations:
           ref: main
           inputs:
             repository: "{{ repo.owner }}/{{ repo.name }}"
-            pr_number: "{{ pr.number }}"  # Added quotes to make it a string
+            pr_number: "{{ pr.number }}" 
 
   linearb_ai_codereview:
     # Ai Code Review - Triggers only when PR is ready for review, see docs https://docs.gitstream.cm/execution-model/#action-level-execution-control
