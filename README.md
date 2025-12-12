@@ -2,6 +2,9 @@
 
 A full-stack demo app used to showcase `gitStream` automations like AI, `codeExperts`, contributor mapping, and PR workflows.
 
+LFG bro
+
+
 ### 🗂️ Structure
 
 - `frontend/` – HTML/JS UI and NodeJS proxy
@@ -44,4 +47,5 @@ graph TD
 docker-compose up --build
 ```
 Open a browser to http://localhost:3000/
+
 
