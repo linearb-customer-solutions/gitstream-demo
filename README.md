@@ -14,7 +14,7 @@ A full-stack demo app used to showcase `gitStream` automations like AI, `codeExp
 ## 🧭 Architecture
 
 ```mermaid
-
+jnonoonnonoonononon
 graph TD
 
   subgraph "☁️ Public Services"
@@ -44,4 +44,5 @@ graph TD
 docker-compose up --build
 ```
 Open a browser to http://localhost:3000/
+
 
