@@ -7,7 +7,7 @@ A full-stack demo app used to showcase `gitStream` automations like AI, `codeExp
 - `frontend/` – HTML/JS UI and NodeJS proxy
 - `services/auth-python/` – Auth (FastAPI)
 - `services/billing-csharp/` – Billing (.NET Core)
-- `services/orders-java/` – Orders (Spring Boot)
+- `services/orders-java/` – Orders (Spring Boot)zsaddsdas
 - `.cm/` – gitStream config
 - `docker-compose.yml` – Runs everything
 
@@ -44,4 +44,5 @@ graph TD
 docker-compose up --build
 ```
 Open a browser to http://localhost:3000/
+
 
